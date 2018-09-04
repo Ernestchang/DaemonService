@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.SystemClock;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 /**
@@ -35,8 +36,10 @@ public class DaemonHolder {
     public static void startService() {
         if (mContext != null && mService != null && !DaemonUtil.isServiceRunning(mContext, mServiceCanonicalName)) {
             try {
-                mContext.startService(new Intent(mContext, mService));
+//                mContext.startService(new Intent(mContext, mService));
+                ContextCompat.startForegroundService(mContext, new Intent(mContext, mService));
                 Log.d(TAG, "启动服务");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
