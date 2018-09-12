@@ -55,22 +55,25 @@ public class DaemonHolder {
 //    }
 
     public static void startService() {
-        try {
-            ContextCompat.startForegroundService(mContext, new Intent(mContext, mService));
-            Log.d(TAG, "启动服务");
+        if (mContext != null && mService != null) {
+            try {
+                ContextCompat.startForegroundService(mContext, new Intent(mContext, mService));
+                Log.d(TAG, "启动服务");
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !DaemonUtil.isXiaomi()) {
+                JobSchedulerService.scheduleJobService(mContext);
+                Log.d(TAG, "启动 JobService");
+            }
+
+            mContext.getPackageManager().setComponentEnabledSetting(new ComponentName(mContext.getPackageName(), mService.getName()),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
         }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !DaemonUtil.isXiaomi()) {
-            JobSchedulerService.scheduleJobService(mContext);
-            Log.d(TAG, "启动 JobService");
-        }
-
-        mContext.getPackageManager().setComponentEnabledSetting(new ComponentName(mContext.getPackageName(), mService.getName()),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
     }
+
 
     public static void stopService() {
         if (mContext != null && mService != null && DaemonUtil.isServiceRunning(mContext, mServiceCanonicalName)) {
