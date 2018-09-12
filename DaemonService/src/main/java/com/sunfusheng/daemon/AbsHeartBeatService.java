@@ -99,14 +99,9 @@ public abstract class AbsHeartBeatService extends Service {
     }
 
     @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
-        onStartService();
-    }
-
-    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand()");
+        onStartService();
         return Service.START_STICKY;
     }
 
