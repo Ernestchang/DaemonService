@@ -1,5 +1,6 @@
 package com.sunfusheng.daemon;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -89,6 +90,7 @@ public abstract class AbsHeartBeatService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate()");
+        startForeground(1, new Notification());
 //        onStartService();
         startBindService();
         if (getHeartBeatMillis() > 0) {
