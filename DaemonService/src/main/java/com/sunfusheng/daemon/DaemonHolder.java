@@ -33,25 +33,43 @@ public class DaemonHolder {
         startService();
     }
 
+//    public static void startService() {
+//        if (mContext != null && mService != null && !DaemonUtil.isServiceRunning(mContext, mServiceCanonicalName)) {
+//            try {
+////                mContext.startService(new Intent(mContext, mService));
+//                ContextCompat.startForegroundService(mContext, new Intent(mContext, mService));
+//                Log.d(TAG, "启动服务");
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !DaemonUtil.isXiaomi()) {
+//                JobSchedulerService.scheduleJobService(mContext);
+//                Log.d(TAG, "启动 JobService");
+//            }
+//
+//            mContext.getPackageManager().setComponentEnabledSetting(new ComponentName(mContext.getPackageName(), mService.getName()),
+//                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+//        }
+//    }
+
     public static void startService() {
-        if (mContext != null && mService != null && !DaemonUtil.isServiceRunning(mContext, mServiceCanonicalName)) {
-            try {
-//                mContext.startService(new Intent(mContext, mService));
-                ContextCompat.startForegroundService(mContext, new Intent(mContext, mService));
-                Log.d(TAG, "启动服务");
+        try {
+            ContextCompat.startForegroundService(mContext, new Intent(mContext, mService));
+            Log.d(TAG, "启动服务");
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !DaemonUtil.isXiaomi()) {
-                JobSchedulerService.scheduleJobService(mContext);
-                Log.d(TAG, "启动 JobService");
-            }
-
-            mContext.getPackageManager().setComponentEnabledSetting(new ComponentName(mContext.getPackageName(), mService.getName()),
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !DaemonUtil.isXiaomi()) {
+            JobSchedulerService.scheduleJobService(mContext);
+            Log.d(TAG, "启动 JobService");
+        }
+
+        mContext.getPackageManager().setComponentEnabledSetting(new ComponentName(mContext.getPackageName(), mService.getName()),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
     }
 
     public static void stopService() {

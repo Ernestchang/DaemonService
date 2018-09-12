@@ -89,11 +89,17 @@ public abstract class AbsHeartBeatService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate()");
-        onStartService();
+//        onStartService();
         startBindService();
         if (getHeartBeatMillis() > 0) {
             timer.schedule(timerTask, getDelayExecutedMillis(), getHeartBeatMillis());
         }
+    }
+
+    @Override
+    public void onStart(Intent intent, int startId) {
+        super.onStart(intent, startId);
+        onStartService();
     }
 
     @Override
