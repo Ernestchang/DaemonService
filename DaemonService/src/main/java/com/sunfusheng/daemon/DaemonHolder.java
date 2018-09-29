@@ -23,6 +23,7 @@ public class DaemonHolder {
     static Class<? extends Service> mService;
     private static String mServiceCanonicalName;
 
+
     private DaemonHolder() {
     }
 
@@ -57,7 +58,11 @@ public class DaemonHolder {
     public static void startService() {
         if (mContext != null && mService != null) {
             try {
-                ContextCompat.startForegroundService(mContext, new Intent(mContext, mService));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ContextCompat.startForegroundService(mContext, new Intent(mContext, mService));
+                } else {
+                    mContext.startService(new Intent(mContext, mService));
+                }
                 Log.d(TAG, "启动服务");
 
             } catch (Exception e) {

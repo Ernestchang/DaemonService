@@ -12,6 +12,8 @@ public class DaemonUtil {
     private static final long INTERVAL_TIME = 30 * 1000;
     private static final String BRAND = Build.BRAND.toLowerCase();
     private static ActivityManager activityManager;
+    public static final String CHANNEL_ID = "11111";
+
 
     public static ActivityManager getActivityManager(Context context) {
         if (activityManager == null) {

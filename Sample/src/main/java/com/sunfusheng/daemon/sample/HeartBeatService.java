@@ -1,6 +1,5 @@
 package com.sunfusheng.daemon.sample;
 
-import android.app.Notification;
 import android.os.Looper;
 import android.util.Log;
 
@@ -16,7 +15,6 @@ public class HeartBeatService extends AbsHeartBeatService {
     @Override
     public void onStartService() {
         Log.d(TAG, "onStartService()");
-        startForeground(1, new Notification());
     }
 
     @Override
